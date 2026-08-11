@@ -1,0 +1,54 @@
+<form action="/sign-up" method="POST">
+  <div class="field">
+    <label for="first-name">First Name: </label>
+    <input
+      type="text"
+      name="first_name"
+      id="first-name"
+      maxlength="100"
+      required
+    />
+  </div>
+  <div class="field">
+    <label for="last-name">Last Name: </label>
+    <input
+      type="text"
+      name="last_name"
+      id="last-name"
+      maxlength="100"
+      required
+    />
+  </div>
+  <div class="field">
+    <label for="username">Username: </label>
+    <input
+      type="text"
+      name="username"
+      id="username"
+      minlength="3"
+      maxlength="100"
+      required
+    />
+  </div>
+  <div class="field">
+    <label for="password">Password: </label>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      minlength="6"
+      required
+    />
+  </div>
+  <div class="field">
+    <label for="confirm-password">Confirm Password: </label>
+    <input
+      type="password"
+      name="confirm_password"
+      id="confirm-password"
+      minlength="6"
+      required
+    />
+  </div>
+  <button type="submit">Sign Up</button>
+</form>
