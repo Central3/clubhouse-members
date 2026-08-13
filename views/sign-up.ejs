@@ -6,8 +6,10 @@
       name="first_name"
       id="first-name"
       maxlength="100"
+      value="<%= data?.first_name || '' %>"
       required
     />
+    <span><%= errors.first_name?.msg %></span>
   </div>
   <div class="field">
     <label for="last-name">Last Name: </label>
@@ -16,8 +18,10 @@
       name="last_name"
       id="last-name"
       maxlength="100"
+      value="<%= data?.last_name || '' %>"
       required
     />
+    <span><%= errors.last_name?.msg %></span>
   </div>
   <div class="field">
     <label for="username">Username: </label>
@@ -27,8 +31,10 @@
       id="username"
       minlength="3"
       maxlength="100"
+      value="<%= data?.username || '' %>"
       required
     />
+    <span><%= errors.username?.msg %></span>
   </div>
   <div class="field">
     <label for="password">Password: </label>
@@ -39,6 +45,7 @@
       minlength="6"
       required
     />
+    <span><%= errors.password?.msg %></span>
   </div>
   <div class="field">
     <label for="confirm-password">Confirm Password: </label>
@@ -49,6 +56,7 @@
       minlength="6"
       required
     />
+    <span><%= errors.confirm_password?.msg %></span>
   </div>
   <button type="submit">Sign Up</button>
 </form>
