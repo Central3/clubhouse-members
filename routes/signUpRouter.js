@@ -1,5 +1,8 @@
 import express from "express";
 import { body, validationResult, matchedData } from "express-validator";
+import bcrypt from "bcryptjs";
+
+import { registerUser } from "../database/query.js";
 
 const requiredErr = "is required.";
 
@@ -42,7 +45,7 @@ signUpRouter.get("/", (req, res) => {
   res.render("sign-up", { data: {}, errors: {} });
 });
 
-signUpRouter.post("/", validateUser, (req, res) => {
+signUpRouter.post("/", validateUser, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const { password, confirm_password, ...formData } = req.body;
@@ -53,7 +56,9 @@ signUpRouter.post("/", validateUser, (req, res) => {
 
   const data = matchedData(req);
 
-  console.log("Sign up successful");
+  const hashedPassword = await bcrypt.hash(data.password, 10);
+  const { password, confirm_password, ...user } = data;
+  await registerUser(user, hashedPassword);
   res.redirect("/sign-up");
 });
 

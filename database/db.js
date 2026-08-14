@@ -1,6 +1,7 @@
-import { Client } from "pg";
 import { readFileSync } from "node:fs";
 import path from "node:path";
+
+import { Client } from "pg";
 
 const filePath = process.argv[2];
 const sql = readFileSync(filePath, "utf-8");

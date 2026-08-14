@@ -1,7 +1,9 @@
-import express from "express";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+
+import express from "express";
 import expressEjsLayouts from "express-ejs-layouts";
+
 import signUpRouter from "./routes/signUpRouter.js";
 
 const app = express();
