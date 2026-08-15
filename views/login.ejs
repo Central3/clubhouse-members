@@ -7,8 +7,10 @@
       id="username"
       minlength="3"
       maxlength="100"
+      value="<%= data?.username || '' %>"
       required
     />
+    <span><%= errors.username?.msg %></span>
   </div>
   <div class="field">
     <label for="password">Password: </label>
@@ -19,6 +21,7 @@
       minlength="6"
       required
     />
+    <span><%= errors.password?.msg %></span>
   </div>
   <button type="submit">Log In</button>
 </form>
