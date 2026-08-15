@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 
 import { registerUser } from "../database/query.js";
 
+const signUpRouter = express.Router();
 const requiredErr = "is required.";
 
 const validateUser = [
@@ -38,8 +39,6 @@ const validateUser = [
       return true;
     }),
 ];
-
-const signUpRouter = express.Router();
 
 signUpRouter.get("/", (req, res) => {
   res.render("sign-up", { data: {}, errors: {} });
