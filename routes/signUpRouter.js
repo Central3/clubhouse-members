@@ -25,7 +25,7 @@ signUpRouter.post("/", validateSignUp, async (req, res) => {
   const hashedPassword = await bcrypt.hash(data.password, 10);
   const { password, confirm_password, ...user } = data;
   await registerUser(user, hashedPassword);
-  res.redirect("/sign-up");
+  res.redirect("/log-in");
 });
 
 export default signUpRouter;

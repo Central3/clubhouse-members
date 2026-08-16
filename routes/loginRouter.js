@@ -2,6 +2,7 @@ import express from "express";
 import { validationResult, matchedData } from "express-validator";
 
 import { validateLogIn } from "../validators/authValidator.js";
+import passport from "passport";
 
 const loginRouter = express.Router();
 
@@ -9,7 +10,7 @@ loginRouter.get("/", (req, res) => {
   res.render("login", { data: {}, errors: {} });
 });
 
-loginRouter.post("/", validateLogIn, (req, res) => {
+const checkValidation = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const { password, ...formData } = req.body;
@@ -18,8 +19,18 @@ loginRouter.post("/", validateLogIn, (req, res) => {
       .render("login", { data: formData, errors: errors.mapped() });
   }
 
-  const data = matchedData(req);
-  console.log(data);
-});
+  next();
+};
+
+loginRouter.post(
+  "/",
+  validateLogIn,
+  checkValidation,
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/log-in",
+    failureMessage: true,
+  })
+);
 
 export default loginRouter;
