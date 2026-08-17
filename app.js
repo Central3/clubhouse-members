@@ -11,6 +11,7 @@ import bcrypt from "bcryptjs";
 import signUpRouter from "./routes/signUpRouter.js";
 import loginRouter from "./routes/loginRouter.js";
 import logoutRouter from "./routes/logoutRouter.js";
+import newMessageRouter from "./routes/newMessage.js";
 import pool from "./database/pool.js";
 
 const app = express();
@@ -72,15 +73,20 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-app.get("/", (req, res) => {
+const checkAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
-    return res.render("index", { user: req.user });
+    return next();
   }
   res.redirect("/log-in");
+};
+
+app.get("/", checkAuthenticated, (req, res) => {
+  return res.render("index", { user: req.user });
 });
 app.use("/sign-up", signUpRouter);
 app.use("/log-in", loginRouter);
 app.use("/log-out", logoutRouter);
+app.use("/new-message", checkAuthenticated, newMessageRouter);
 
 app.listen(PORT, (error) => {
   if (error) {
