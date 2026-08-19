@@ -11,7 +11,7 @@ import bcrypt from "bcryptjs";
 import signUpRouter from "./routes/signUpRouter.js";
 import loginRouter from "./routes/loginRouter.js";
 import logoutRouter from "./routes/logoutRouter.js";
-import newMessageRouter from "./routes/newMessage.js";
+import newMessageRouter from "./routes/newMessageRouter.js";
 import pool from "./database/pool.js";
 
 const app = express();

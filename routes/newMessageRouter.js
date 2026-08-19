@@ -1,8 +1,8 @@
 import express from "express";
-import { matchedData } from "express-validator";
+import { body, matchedData } from "express-validator";
 
-import { body } from "express-validator";
 import checkValidation from "../middleware/checkValidationMiddleware.js";
+import { addMessage } from "../database/query.js";
 
 const newMessageRouter = express.Router();
 
@@ -22,11 +22,10 @@ newMessageRouter.post(
   "/",
   validateMessage,
   checkValidation("new-message"),
-  (req, res) => {
+  async (req, res) => {
     const data = matchedData(req);
-    console.log(
-      `New message from ${req.user.username}: ${data.message_content}`
-    );
+    const message = { ...data, userId: req.user.id };
+    await addMessage(message);
     res.redirect("/");
   }
 );
