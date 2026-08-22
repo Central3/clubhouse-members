@@ -1,3 +1,13 @@
 <h1>Hello <%= user?.username %></h1>
 <a href="/new-message">New Message</a>
 <a href="/log-out">Log Out</a>
+<div class="messages-container">
+  <% messages.forEach(message => { %>
+  <div class="message">
+    <p><%= message.username %></p>
+    <h2><%= message.title %></h2>
+    <p><%= message.content %></p>
+    <p><%= message.formatted_date %></p>
+  </div>
+  <% }) %>
+</div>

@@ -10,6 +10,13 @@ async function registerUser(user, password) {
 }
 
 // Message related queries
+async function getAllMessages() {
+  const messages = await pool.query(
+    "SELECT message_id, title, content, created_at, username FROM messages JOIN users ON messages.user_id = users.id"
+  );
+  return messages.rows;
+}
+
 async function addMessage(message) {
   const { message_title: title, message_content: content, userId } = message;
   await pool.query(
@@ -18,4 +25,4 @@ async function addMessage(message) {
   );
 }
 
-export { registerUser, addMessage };
+export { registerUser, addMessage, getAllMessages };

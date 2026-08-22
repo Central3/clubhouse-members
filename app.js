@@ -13,6 +13,7 @@ import loginRouter from "./routes/loginRouter.js";
 import logoutRouter from "./routes/logoutRouter.js";
 import newMessageRouter from "./routes/newMessageRouter.js";
 import pool from "./database/pool.js";
+import { getAllMessages } from "./database/query.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -80,9 +81,27 @@ const checkAuthenticated = (req, res, next) => {
   res.redirect("/log-in");
 };
 
-app.get("/", checkAuthenticated, (req, res) => {
-  return res.render("index", { user: req.user });
+app.get("/", checkAuthenticated, async (req, res) => {
+  let messages = await getAllMessages();
+  const user = req.user;
+
+  messages = messages.map((message) => {
+    message.formatted_date = new Intl.DateTimeFormat("en-US", {
+      timeStyle: "short",
+      dateStyle: "medium",
+    }).format(message.created_at);
+
+    if (!user.is_member) {
+      message.username = "*".repeat(message.username.length);
+      message.formatted_date = "*".repeat(message.formatted_date.length);
+    }
+
+    return message;
+  });
+
+  return res.render("index", { user: req.user, messages });
 });
+
 app.use("/sign-up", signUpRouter);
 app.use("/log-in", loginRouter);
 app.use("/log-out", logoutRouter);
